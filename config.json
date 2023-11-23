@@ -1,0 +1,19 @@
+{
+    "params":
+    {
+        "local_server":"True",
+        "local_uri":"mysql://root:@localhost/bharat",
+        "prod_uri":"mysql://root:@localhost/bharat",
+        "fb_url":"https://www.facebook.com/",
+        "tw_url":"https://www.twitter.com/",
+        "gh_url":"https://www.github.com/",
+        "blog_name1":"संवाद भारत",
+        "blog_name2":"हिंदी हार्बर",
+        "blog_name":"News Harbour",
+        "tag_line1":"सच्ची ख़बरों का आधार",
+        "tag_line":"Discover the Unexplored"
+
+        
+        
+    }
+}

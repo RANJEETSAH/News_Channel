@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{{url_for('static', filename='/assets/img/about-bg.jpg') }}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                            <h1>हमारे बारे में (About Us)</h1>
+                            <span class="subheading"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <p>प्रस्तावना (Introduction):
+                            {{params['blog_name']}} एक विश्वसनीय न्यूज़ चैनल है। हमारा उद्देश्य है जनता को सत्य और निष्पक्ष समाचार प्रदान करना, राजनीति, समाज, खेल और व्यापार से जुड़ी घटनाओं का विस्तृत कवरेज प्रदान करना इत्यादि।</p>
+                        <p> संपर्क करें (Contact Us):
+                            हमसे संपर्क करने के लिए या किसी घटना की सुचना देने के लिए कृपया यहां क्लिक करें<a href="contact"> Contact</a></p>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+{% endblock %}
