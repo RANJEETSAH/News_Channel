@@ -29,6 +29,7 @@ class Contacts(db.Model):
 
 class Posts(db.Model):
     S_No = db.Column(db.Integer, primary_key=True)
+    Author = db.Column(db.String(50), nullable=False)
     Title = db.Column(db.String(80), nullable=False)
     Slug = db.Column(db.String(120), unique=True, nullable=False)
     Content = db.Column(db.String)
@@ -37,7 +38,8 @@ class Posts(db.Model):
 
 @app.route("/")
 def index():
-    return render_template("index.html", params=params)
+    posts=Posts.query.filter_by().all() [0:params['no_of_posts']]
+    return render_template("index.html", params=params, posts=posts)
 @app.route("/index")
 def index1():
     return render_template("index.html", params=params)
