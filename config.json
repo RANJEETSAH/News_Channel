@@ -12,7 +12,10 @@
         "blog_name":"News Harbour",
         "tag_line1":"सच्ची ख़बरों का आधार",
         "tag_line":"Discover the Unexplored",
-        "no_of_posts":5
+        "no_of_posts":5,
+        "login_image":"login.svg",
+        "admin_user":"ranjeet.sah14@gmail.com",
+        "admin_password":"G@mharia832108" 
         
         
     }

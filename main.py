@@ -40,6 +40,13 @@ class Posts(db.Model):
 def index():
     posts=Posts.query.filter_by().all() [0:params['no_of_posts']]
     return render_template("index.html", params=params, posts=posts)
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if request.method=='POST':
+        pass
+    else:
+        return render_template("dashboard.html", params=params)
+ 
 @app.route("/index")
 def index1():
     return render_template("index.html", params=params)
