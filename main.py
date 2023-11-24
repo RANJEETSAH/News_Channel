@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
@@ -11,6 +11,7 @@ with open('config.json','r', encoding='utf-8') as c:
 
 
 app = Flask(__name__)
+app.secret_key = "super-secret-key"
 
 if (local_server):
     app.config['SQLALCHEMY_DATABASE_URI'] = params["local_uri"]
@@ -42,10 +43,18 @@ def index():
     return render_template("index.html", params=params, posts=posts)
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    posts=Posts.query.filter_by().all()
+    if ('user' in session and session['user'] == params['admin_user']):
+        return render_template('dashboard.html', params=params,posts=posts )
+
     if request.method=='POST':
-        pass
-    else:
-        return render_template("dashboard.html", params=params)
+        username = request.form.get('uname')
+        userpass = request.form.get('pass')
+        if (username == params['admin_user'] and userpass == params['admin_password']):
+            session['user']  = username
+            return render_template('dashboard.html', params=params, posts=posts)
+
+    return render_template("login.html", params=params)
  
 @app.route("/index")
 def index1():
