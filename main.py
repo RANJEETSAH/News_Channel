@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
@@ -62,6 +62,35 @@ def index1():
 @app.route("/about")
 def about():
     return render_template("about.html", params=params)
+
+@app.route("/edit/<string:S_No>", methods = ['GET','POST'])
+def edit(S_No):
+    if ('user' in session and session['user'] == params['admin_user']):
+        if request.method == 'POST':
+            author = request.form.get('author')
+            title = request.form.get('title')
+            slug = request.form.get('slug')
+            content = request.form.get('content')
+            img_file = request.form.get('img_file')
+            date = datetime.now()
+
+            if S_No == "0":
+                post = Posts(Author=author, Title=title, Slug=slug, Content=content, img_file=img_file, Date=date)
+                db.session.add(post)
+                db.session.commit()
+            else:
+                post=Posts.query.filter_by(S_No=S_No).first()
+                post.Author=author
+                post.Title=title
+                post.Slug=slug
+                post.Content=content
+                post.img_file=img_file
+                post.Date=date
+                db.session.commit()
+                return redirect("/edit/"+S_No)
+        post=Posts.query.filter_by(S_No=S_No).first()
+        return render_template ('edit.html', params=params, post=post)
+
 @app.route("/contact", methods = ['GET','POST'])
 def contact():
         
@@ -79,4 +108,4 @@ def contact():
 def post_route(post_slug):
     post=Posts.query.filter_by(Slug=post_slug).first()
     return render_template("post.html", params=params,post=post)
-app.run(debug=True, host = "192.168.237.224")
+app.run(debug=True, host = "192.168.234.224")
