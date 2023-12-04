@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from werkzeug.utils import secure_filename
 import json
+import os
 
 local_server=True
 
@@ -12,6 +14,7 @@ with open('config.json','r', encoding='utf-8') as c:
 
 app = Flask(__name__)
 app.secret_key = "super-secret-key"
+app.config['UPLOAD_FOLDER'] = params['upload_location']
 
 if (local_server):
     app.config['SQLALCHEMY_DATABASE_URI'] = params["local_uri"]
@@ -89,7 +92,7 @@ def edit(S_No):
                 db.session.commit()
                 return redirect("/edit/"+S_No)
         post=Posts.query.filter_by(S_No=S_No).first()
-        return render_template ('edit.html', params=params, post=post)
+        return render_template ('edit.html', params=params, S_No=S_No, post=post)
 
 @app.route("/contact", methods = ['GET','POST'])
 def contact():
@@ -108,4 +111,29 @@ def contact():
 def post_route(post_slug):
     post=Posts.query.filter_by(Slug=post_slug).first()
     return render_template("post.html", params=params,post=post)
+
+@app.route("/uploader", methods = ['GET','POST'])
+def uploader():
+    if ('user' in session and session['user'] == params['admin_user']):
+        if (request.method == 'POST'):
+            f = request.files['file1']
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+            return "Uploaded Successfully"
+
+
+@app.route("/logout")
+def logout():
+    session.pop('user')
+    return redirect('/login')
+
+@app.route("/delete/<string:S_No>", methods = ['GET','POST'])
+def delete(S_No):
+    if ('user' in session and session['user'] == params['admin_user']):
+        post=Posts.query.filter_by(S_No=S_No).first()
+        db.session.delete(post)
+        db.session.commit()
+    return redirect('/login')
+        
+
+
 app.run(debug=True, host = "192.168.234.224")

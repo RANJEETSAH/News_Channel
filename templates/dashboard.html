@@ -27,7 +27,10 @@
             <h1>Upload a file</h1>
           
             
-                we will add file uploader here
+               <form action="/uploader" method="post" enctype="multipart/form-data">
+               <input type="file" name="file1">
+               <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
+              </form>
             <hr>
             
 
@@ -50,7 +53,7 @@
                     <td>{{post.Title}}</td>
                     <td>{{post.Date}}</td>
                     <td> <a href="/edit/{{post.S_No}}"><button class="btn btn-primary text-uppercase">Edit</button></a></td>
-                    <td><button class="btn btn-primary text-uppercase">Delete</button></td>
+                    <td><a href="/delete/{{post.S_No}}"><button class="btn btn-primary text-uppercase">Delete</button></a></td>
                   </tr>
                   {% endfor %}
                 </tbody>

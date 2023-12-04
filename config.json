@@ -15,7 +15,8 @@
         "no_of_posts":5,
         "login_image":"login.svg",
         "admin_user":"ranjeet.sah14@gmail.com",
-        "admin_password":"G@mharia832108" 
+        "admin_password":"G@mharia832108" ,
+        "upload_location":"C:\\Users\\Rupa\\Desktop\\Projects\\Blog Website\\static\\assets\\img"
         
         
     }
