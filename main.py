@@ -4,7 +4,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 import json
 import os
-
+import math
 local_server=True
 
 with open('config.json','r', encoding='utf-8') as c:
@@ -42,8 +42,30 @@ class Posts(db.Model):
 
 @app.route("/")
 def index():
-    posts=Posts.query.filter_by().all() [0:params['no_of_posts']]
-    return render_template("index.html", params=params, posts=posts)
+    posts=Posts.query.filter_by().all()
+    last = math.ceil(len(posts)/int(params['no_of_posts'])) 
+    # [0:params['no_of_posts']]
+    page = request.args.get('page')
+    if ( not str(page).isnumeric()):
+        page = 1
+    page = int(page)
+
+    posts = posts [(page-1) * int(params['no_of_posts']):(page-1)*int(params['no_of_posts'])+int(params['no_of_posts'])]
+    #Pagination logic
+    #First
+    if (page == 1):
+        prev = "#"
+        next  = "/?page="+ str(page+1)
+    elif (page == last):
+        prev  = "/?page="+ str(page-1)
+        next = "/#"
+    else:
+        prev  = "/?page="+ str(page-1)
+        next  = "/?page="+ str(page+1)
+
+
+    
+    return render_template("index.html", params=params, posts=posts, prev=prev, next=next)
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     posts=Posts.query.filter_by().all()
@@ -136,4 +158,4 @@ def delete(S_No):
         
 
 
-app.run(debug=True, host = "192.168.234.224")
+app.run(debug=True, host = "192.168.245.224")
